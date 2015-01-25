@@ -1,7 +1,7 @@
 Package: modeltests
 Type: Package
 Title: Data model performance tests
-Version: 0.1
+Version: 0.2
 Date: 2015-01-25
 Author: Matthew Lincoln
 Maintainer: Matthew Lincoln <mlincol1@umd.edu>
