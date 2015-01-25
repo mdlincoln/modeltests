@@ -7,7 +7,7 @@ To install:
 
 ```R
 library(devtools)
-install_github("mdlinoln/model_tests")
+install_github("mdlinoln/modeltests")
 ```
 
 ***
