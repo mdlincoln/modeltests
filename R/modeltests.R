@@ -14,10 +14,10 @@ library(dplyr)
 
 confusion_matrix <- function(truth, pred) {
 
-  if(is.na(truth) | is.na(pred))
+  if(any(is.na(truth), is.na(pred)))
     stop("No NA vectors allowed")
 
-  if(typeof(truth) != "logical" | typeof(pred) != "logical")
+  if(any(typeof(truth) != "logical", typeof(pred) != "logical"))
     stop("Both vectors must be of type 'logical'")
 
   if(length(truth) != length(pred))
@@ -60,7 +60,7 @@ accuracy <- function(truth, pred) {
 precision <- function(truth, pred) {
   cm <- confusion_matrix(truth, pred)
   tp <- cm$n[cm$truth == TRUE & cm$pred == TRUE]
-  tpfp <- cm$n[cm$pred == TRUE]
+  tpfp <- sum(cm$n[cm$pred == TRUE])
   return(tp/tpfp)
 }
 
@@ -99,6 +99,7 @@ specificity <- function(truth, pred) {
   cm <- confusion_matrix(truth, pred)
   tn <- cm$n[cm$truth == FALSE & cm$pred == FALSE]
   tnfp <- sum(cm$n[cm$truth == FALSE])
+  tn/tnfp
 }
 
 #' Calculate F1 score
