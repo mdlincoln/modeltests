@@ -126,6 +126,8 @@ F1 <- function(truth, pred) {
 #' specificity and F1 value.
 #' @param truth A logical vector of true values
 #' @param pred A logical vector of values predicted by the model
+#' @param name An atomic character vector that will be appended to the output
+#'   table, useful if you will be joining multipe summary tables
 #' @param gathered A boolean value. If TRUE, returns a 'tidy' dataframe with a
 #'   column of values, and one row per measure type. If FALSE, returns a one-row
 #'   data frame with one column for each measure type.
@@ -135,7 +137,7 @@ F1 <- function(truth, pred) {
 #' t <- c(TRUE, TRUE, FALSE, TRUE, FALSE)
 #' p <- c(TRUE, FALSE, TRUE, TRUE, FALSE)
 #' summary_table(t, p, gathered = FALSE)
-summary_table <- function(truth, pred, gathered = TRUE) {
+summary_table <- function(truth, pred, name = NULL, gathered = TRUE) {
   measures <- data.frame(
     accuracy = accuracy(truth, pred),
     precision = precision(truth, pred),
@@ -144,8 +146,11 @@ summary_table <- function(truth, pred, gathered = TRUE) {
   ) %>%
     mutate(F1 = precision * recall)
 
+  if(!is.null(name))
+    measures <- measures %>% mutate(name = name)
+
   if(gathered)
-    measures %>% gather(measure, value, accuracy:F1)
+    measures <- measures %>% gather(measure, value, accuracy:F1)
 
   return(measures)
 }
