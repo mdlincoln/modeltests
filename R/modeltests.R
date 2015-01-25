@@ -14,10 +14,10 @@ library(dplyr)
 
 confusion_matrix <- function(truth, pred) {
 
-  if(is.na(truth) | is.na(pred))
+  if(any(is.na(truth), is.na(pred)))
     stop("No NA vectors allowed")
 
-  if(typeof(truth) != "logical" | typeof(pred) != "logical")
+  if(any(typeof(truth) != "logical", typeof(pred) != "logical"))
     stop("Both vectors must be of type 'logical'")
 
   if(length(truth) != length(pred))
