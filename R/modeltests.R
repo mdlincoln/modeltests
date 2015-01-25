@@ -120,6 +120,21 @@ F1 <- function(truth, pred) {
   precision(truth, pred) * recall(truth, pred)
 }
 
+#' Create a summary table of model performance measures
+#'
+#' This function returns a data frame of model accuracy, precision, recall,
+#' specificity and F1 value.
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
+#' @param gathered A boolean value. If TRUE, returns a 'tidy' dataframe with a
+#'   column of values, and one row per measure type. If FALSE, returns a one-row
+#'   data frame with one column for each measure type.
+#' @return A data frame with performance measure values
+#' @export
+#' @examples
+#' t <- c(TRUE, TRUE, FALSE, TRUE, FALSE)
+#' p <- c(TRUE, FALSE, TRUE, TRUE, FALSE)
+#' summary_table(t, p, gathered = FALSE)
 summary_table <- function(truth, pred, gathered = TRUE) {
   measures <- data.frame(
     accuracy = accuracy(truth, pred),
