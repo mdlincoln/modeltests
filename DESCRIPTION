@@ -1,4 +1,4 @@
-Package: model_tests
+Package: modeltests
 Type: Package
 Title: Data model performance tests
 Version: 0.1
