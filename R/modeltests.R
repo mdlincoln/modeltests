@@ -1,4 +1,5 @@
 library(dplyr)
+library(tidyr)
 
 #' Create a confusion matrix
 #'
@@ -117,4 +118,39 @@ specificity <- function(truth, pred) {
 #' F1(t, p)
 F1 <- function(truth, pred) {
   precision(truth, pred) * recall(truth, pred)
+}
+
+#' Create a summary table of model performance measures
+#'
+#' This function returns a data frame of model accuracy, precision, recall,
+#' specificity and F1 value.
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
+#' @param name An atomic character vector that will be appended to the output
+#'   table, useful if you will be joining multipe summary tables
+#' @param gathered A boolean value. If TRUE, returns a 'tidy' dataframe with a
+#'   column of values, and one row per measure type. If FALSE, returns a one-row
+#'   data frame with one column for each measure type.
+#' @return A data frame with performance measure values
+#' @export
+#' @examples
+#' t <- c(TRUE, TRUE, FALSE, TRUE, FALSE)
+#' p <- c(TRUE, FALSE, TRUE, TRUE, FALSE)
+#' summary_table(t, p, gathered = FALSE)
+summary_table <- function(truth, pred, name = NULL, gathered = TRUE) {
+  measures <- data.frame(
+    accuracy = accuracy(truth, pred),
+    precision = precision(truth, pred),
+    recall = recall(truth, pred),
+    specificity = specificity(truth, pred)
+  ) %>%
+    mutate(F1 = precision * recall)
+
+  if(!is.null(name))
+    measures <- measures %>% mutate(name = name)
+
+  if(gathered)
+    measures <- measures %>% gather(measure, value, accuracy:F1)
+
+  return(measures)
 }
