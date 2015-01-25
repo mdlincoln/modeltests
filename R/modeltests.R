@@ -13,6 +13,16 @@ library(dplyr)
 #' confusion_matrix(t, p)
 
 confusion_matrix <- function(truth, pred) {
+
+  if(is.na(truth) | is.na(pred))
+    stop("No NA vectors allowed")
+
+  if(typeof(truth) != "logical" | typeof(pred) != "logical")
+    stop("Both vectors must be of type 'logical'")
+
+  if(length(truth) != length(pred))
+    stop("Vectors must be of the same length")
+
   data.frame(truth, pred) %>% count(truth, pred)
 }
 
