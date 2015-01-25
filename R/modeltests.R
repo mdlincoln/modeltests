@@ -1,4 +1,5 @@
 library(dplyr)
+library(tidyr)
 
 #' Create a confusion matrix
 #'
@@ -117,4 +118,19 @@ specificity <- function(truth, pred) {
 #' F1(t, p)
 F1 <- function(truth, pred) {
   precision(truth, pred) * recall(truth, pred)
+}
+
+summary_table <- function(truth, pred, gathered = TRUE) {
+  measures <- data.frame(
+    accuracy = accuracy(truth, pred),
+    precision = precision(truth, pred),
+    recall = recall(truth, pred),
+    specificity = specificity(truth, pred)
+  ) %>%
+    mutate(F1 = precision * recall)
+
+  if(gathered)
+    measures %>% gather(measure, value, accuracy:F1)
+
+  return(measures)
 }
