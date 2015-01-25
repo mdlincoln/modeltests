@@ -3,8 +3,8 @@ library(dplyr)
 #' Create a confusion matrix
 #'
 #' This function builds a confusion matrix from two logical vectors.
-#' @param truth The true values
-#' @param pred The values predicted by the model
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
 #' @return A dataframe summing every combination
 #' @export
 #' @examples
@@ -13,6 +13,16 @@ library(dplyr)
 #' confusion_matrix(t, p)
 
 confusion_matrix <- function(truth, pred) {
+
+  if(is.na(truth) | is.na(pred))
+    stop("No NA vectors allowed")
+
+  if(typeof(truth) != "logical" | typeof(pred) != "logical")
+    stop("Both vectors must be of type 'logical'")
+
+  if(length(truth) != length(pred))
+    stop("Vectors must be of the same length")
+
   data.frame(truth, pred) %>% count(truth, pred)
 }
 
@@ -20,8 +30,8 @@ confusion_matrix <- function(truth, pred) {
 #'
 #' This function calcuates the fraction of the time that the classifier
 #' correctly identifies true and false values.
-#' @param truth The true values
-#' @param pred The values predicted by the model
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
 #' @return numeric value
 #' @export
 #' @examples
@@ -39,8 +49,8 @@ accuracy <- function(truth, pred) {
 #'
 #' This function calcuates the fraction of the items identified by the
 #' classifier that actually \emph{are} in the class.
-#' @param truth The true values
-#' @param pred The values predicted by the model
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
 #' @return numeric value
 #' @export
 #' @examples
@@ -58,8 +68,8 @@ precision <- function(truth, pred) {
 #'
 #' This function calcuates the fraction of the items \emph{within} the class that the
 #' classifier correctly identifies.
-#' @param truth The true values
-#' @param pred The values predicted by the model
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
 #' @return numeric value
 #' @export
 #' @examples
@@ -77,8 +87,8 @@ recall <- function(truth, pred) {
 #'
 #' This function calcuates the fraction of the items \emph{not} in the class that the
 #' classifier correctly identifies
-#' @param truth The true values
-#' @param pred The values predicted by the model
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
 #' @return numeric value
 #' @export
 #' @examples
@@ -96,8 +106,8 @@ specificity <- function(truth, pred) {
 #' This function calculates the product of the model's recall and precision.
 #' Lower F1 scores may indicate that a model is gaining either precision or
 #' recall at the expense of the complementary score.
-#' @param truth The true values
-#' @param pred The values predicted by the model
+#' @param truth A logical vector of true values
+#' @param pred A logical vector of values predicted by the model
 #' @return numeric value
 #' @export
 #' @examples
