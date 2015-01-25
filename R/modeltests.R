@@ -99,6 +99,7 @@ specificity <- function(truth, pred) {
   cm <- confusion_matrix(truth, pred)
   tn <- cm$n[cm$truth == FALSE & cm$pred == FALSE]
   tnfp <- sum(cm$n[cm$truth == FALSE])
+  tn/tnfp
 }
 
 #' Calculate F1 score
