@@ -60,7 +60,7 @@ accuracy <- function(truth, pred) {
 precision <- function(truth, pred) {
   cm <- confusion_matrix(truth, pred)
   tp <- cm$n[cm$truth == TRUE & cm$pred == TRUE]
-  tpfp <- cm$n[cm$pred == TRUE]
+  tpfp <- sum(cm$n[cm$pred == TRUE])
   return(tp/tpfp)
 }
 
