@@ -1,0 +1,13 @@
+Package: modeltests
+Type: Package
+Title: Data model performance tests
+Version: 0.1
+Date: 2015-01-25
+Author: Matthew Lincoln
+Maintainer: Matthew Lincoln <mlincol1@umd.edu>
+Description: Simple functions for testing model accuracy,
+  precision, recall, and the like
+Depends:
+  dplyr
+License: GPL-3
+URL: https://github.com/mdlincoln/model_tests
